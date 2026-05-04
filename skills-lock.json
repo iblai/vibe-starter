@@ -1,17 +1,11 @@
 {
   "version": 1,
   "skills": {
-    "frontend-design": {
-      "source": "anthropics/skills",
-      "sourceType": "github",
-      "skillPath": "skills/frontend-design/SKILL.md",
-      "computedHash": "063a0e6448123cd359ad0044cc46b0e490cc7964d45ef4bb9fd842bd2ffbca67"
-    },
     "iblai-account": {
       "source": "iblai/vibe",
       "sourceType": "github",
       "skillPath": "skills/iblai-account/SKILL.md",
-      "computedHash": "edd2c5ff5ce775a353677ccdcb61bcb52e47f608469994abc5e00f0284040497"
+      "computedHash": "9e55f58f0cc66c81964d7ffd77f10c5fd13a2926a23c848443151a6fd6d82c6e"
     },
     "iblai-agent-access": {
       "source": "iblai/vibe",
@@ -101,7 +95,7 @@
       "source": "iblai/vibe",
       "sourceType": "github",
       "skillPath": "skills/iblai-auth/SKILL.md",
-      "computedHash": "a8ef15e1be11ec795cef740afcaf03cfc046242719a4db11da730d9544faa3e6"
+      "computedHash": "26291cf8b6091a4a542460acee9f7ca549dfa9737d40e1da967705775aa1b961"
     },
     "iblai-chat": {
       "source": "iblai/vibe",
@@ -120,6 +114,12 @@
       "sourceType": "github",
       "skillPath": "skills/iblai-course-access/SKILL.md",
       "computedHash": "c28a9443148f95b2af4d3a653171a2be9e9e6f304cef693de96d7599a3761ab0"
+    },
+    "iblai-credit": {
+      "source": "iblai/vibe",
+      "sourceType": "github",
+      "skillPath": "skills/iblai-credit/SKILL.md",
+      "computedHash": "273809b78c47b9dbf23b97e58265b54df4b40e8486811f98a095ddb55f9b7f2b"
     },
     "iblai-invite": {
       "source": "iblai/vibe",
@@ -143,13 +143,13 @@
       "source": "iblai/vibe",
       "sourceType": "github",
       "skillPath": "skills/iblai-navbar/SKILL.md",
-      "computedHash": "3c6cb9262c0bcc83bdf2cf382346b64f3ef303d6a4648d207160e1d148f00842"
+      "computedHash": "570efa84e5169f474f2490a1ef710d96bbcc2d20fc345a14a7cef77e4e60a561"
     },
     "iblai-notification": {
       "source": "iblai/vibe",
       "sourceType": "github",
       "skillPath": "skills/iblai-notification/SKILL.md",
-      "computedHash": "0575060abd76fee197047faafce42d086bb6d5a4898c72982f9022ce4e666797"
+      "computedHash": "10b60a11adb1f901147324b46895a9f03887c3352e2ca5ba97ebf257f98e4c52"
     },
     "iblai-onboard": {
       "source": "iblai/vibe",
@@ -173,7 +173,7 @@
       "source": "iblai/vibe",
       "sourceType": "github",
       "skillPath": "skills/iblai-ops-init/SKILL.md",
-      "computedHash": "9bfd90ad4c7aa3747ff6f84613f40daf1465e16f7060ebb435b9bdd3bc8c4c79"
+      "computedHash": "97f2a8de92ce65aabbcdbf7e1b26020665823f916644885d9b0ea08e8eb0f641"
     },
     "iblai-ops-test": {
       "source": "iblai/vibe",
@@ -191,7 +191,7 @@
       "source": "iblai/vibe",
       "sourceType": "github",
       "skillPath": "skills/iblai-profile/SKILL.md",
-      "computedHash": "d974327cc3f0c2a7a7457f0e24b721878a4fc4ddb4dd26ecf568c2e0d5b2e5e9"
+      "computedHash": "c1dad29657a0b814aa2742b0fbf5188fd59dec5f9dbb5a7591ab50da52d1574a"
     },
     "iblai-workflow": {
       "source": "iblai/vibe",

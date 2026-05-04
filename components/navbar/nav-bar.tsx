@@ -4,7 +4,10 @@ import Link from 'next/link';
 import { Menu } from 'lucide-react';
 import { Logo } from './logo';
 import { UserProfileButton } from './user-profile-button';
-import { NotificationDropdown } from '@iblai/iblai-js/web-containers';
+import {
+  CreditBalance,
+  NotificationDropdown,
+} from '@iblai/iblai-js/web-containers';
 import { useCallback } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
@@ -32,6 +35,8 @@ interface NavBarProps {
   onAccountDeleted?: () => void;
   showNotifications?: boolean;
   showProfileDropdown?: boolean;
+  showCreditBalance?: boolean;
+  creditRedirectUrl?: string;
 }
 
 export function NavBar({
@@ -51,6 +56,8 @@ export function NavBar({
   onAccountDeleted,
   showNotifications = true,
   showProfileDropdown = true,
+  showCreditBalance = true,
+  creditRedirectUrl,
 }: NavBarProps) {
   const router = useRouter();
   const pathname = usePathname() ?? '/';
@@ -101,6 +108,26 @@ export function NavBar({
         </div>
 
         <div className="flex items-center space-x-4">
+          {showCreditBalance &&
+            currentTenant?.show_paywall &&
+            tenantKey &&
+            username &&
+            email && (
+              <CreditBalance
+                tenant={tenantKey}
+                enabled={true}
+                username={username}
+                mainPlatformKey={mainPlatformKey}
+                currentUserEmail={email}
+                redirectUrl={
+                  creditRedirectUrl ??
+                  (typeof window !== 'undefined'
+                    ? window.location.origin
+                    : '')
+                }
+              />
+            )}
+
           {showNotifications && (
             <NotificationDropdown
               org={tenantKey}
