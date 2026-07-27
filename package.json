@@ -8,7 +8,7 @@
     "prestart": "next telemetry disable",
     "dev": "next dev",
     "build": "next build",
-    "typecheck": "tsgo --noEmit",
+    "typecheck": "tsc --noEmit",
     "start": "next start",
     "lint": "eslint",
     "test:e2e": "playwright test --config e2e/playwright.config.ts",
@@ -18,7 +18,7 @@
   "dependencies": {
     "@base-ui/react": "^1.4.1",
     "@iblai/agent-ai": "^2.6.2",
-    "@iblai/iblai-js": "^1.26.0",
+    "@iblai/iblai-js": "^1.27.1",
     "@iblai/iblai-web-mentor": "^2.0.1",
     "@livekit/components-react": "^2.9.23",
     "@livekit/components-styles": "^1.2.0",
@@ -45,14 +45,15 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "@typescript/native-preview": "7.0.0-dev.20260707.2",
+    "@typescript/native": "npm:typescript@^7.0.2",
     "cross-env": "^10.1.0",
     "dotenv": "^17.4.2",
     "eslint": "^9",
     "eslint-config-next": "16.2.4",
     "tailwind-scrollbar": "^4.0.2",
     "tailwindcss": "^4",
-    "typescript": "^5",
+    "typescript": "npm:@typescript/typescript6@^6.0.2",
     "vitest": "^4.1.5"
-  }
+  },
+  "packageManager": "pnpm@11.3.0"
 }
