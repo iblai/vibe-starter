@@ -25,6 +25,9 @@ jobs:
   check-and-update:
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    env:
+      # surfaced as env because the secrets context is not usable in step `if`
+      MAIL_USERNAME: ${{ secrets.MAIL_USERNAME }}
     steps:
       - uses: actions/checkout@v4
 
@@ -98,8 +101,10 @@ jobs:
           git commit -m "chore(sdk): bump $SUMMARY"
           git push origin main || { git pull --rebase origin main && git push origin main; }
 
+      # Skips cleanly while the SMTP secrets are unset — GitHub's built-in
+      # workflow-failure email to the workflow author still fires either way.
       - name: Email on failure
-        if: failure() && steps.check.outputs.has-updates == 'true' && inputs.dry-run != true
+        if: failure() && steps.check.outputs.has-updates == 'true' && inputs.dry-run != true && env.MAIL_USERNAME != ''
         uses: dawidd6/action-send-mail@94de994a9f6fffee200243214e17002e2920bb59 # v18
         with:
           server_address: smtp.gmail.com
