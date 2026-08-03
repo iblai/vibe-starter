@@ -1,0 +1,129 @@
+name: SDK auto-update
+
+# Daily check for new @iblai SDK releases (published from iblai/iblai-web-frontend).
+# If a newer version exists, bump it, validate (typecheck + lint + build + unit tests),
+# and push the bump to main when green. When red, email the maintainer instead.
+
+on:
+  schedule:
+    - cron: '23 5 * * *' # daily 05:23 UTC — odd minute to dodge on-the-hour scheduler delays
+  workflow_dispatch:
+    inputs:
+      dry-run:
+        description: 'Run everything but skip the push and the email'
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sdk-auto-update
+  cancel-in-progress: false
+
+jobs:
+  check-and-update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4 # reads version from the packageManager field
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Check npm for newer SDK versions
+        id: check
+        run: |
+          UPDATES=""; SUMMARY=""
+          for PKG in @iblai/iblai-js @iblai/agent-ai; do
+            CURRENT=$(node -p "require('./package.json').dependencies['$PKG'].replace(/^[^0-9]*/, '')")
+            LATEST=$(npm view "$PKG" version)
+            if [ "$CURRENT" != "$LATEST" ]; then
+              UPDATES="$UPDATES $PKG@^$LATEST"
+              SUMMARY="$SUMMARY$PKG $CURRENT -> $LATEST; "
+            fi
+          done
+          SUMMARY="${SUMMARY%'; '}"
+          if [ -n "$UPDATES" ]; then
+            echo "has-updates=true" >> "$GITHUB_OUTPUT"
+            echo "updates=$UPDATES" >> "$GITHUB_OUTPUT"
+            echo "summary=$SUMMARY" >> "$GITHUB_OUTPUT"
+            echo "SDK updates available: $SUMMARY"
+          else
+            echo "has-updates=false" >> "$GITHUB_OUTPUT"
+            echo "SDK is up to date."
+          fi
+
+      - name: Bump SDK packages
+        if: steps.check.outputs.has-updates == 'true'
+        id: bump
+        env:
+          UPDATES: ${{ steps.check.outputs.updates }}
+        run: pnpm add $UPDATES
+
+      - name: Build env from example
+        if: steps.check.outputs.has-updates == 'true'
+        run: cp .env.example .env
+
+      - name: Typecheck
+        if: steps.check.outputs.has-updates == 'true'
+        id: typecheck
+        run: pnpm typecheck
+
+      - name: Lint
+        if: steps.check.outputs.has-updates == 'true'
+        id: lint
+        run: pnpm lint
+
+      - name: Build
+        if: steps.check.outputs.has-updates == 'true'
+        id: build
+        run: pnpm build
+
+      - name: Unit tests
+        if: steps.check.outputs.has-updates == 'true'
+        id: unit
+        run: pnpm test
+
+      - name: Commit and push bump
+        if: steps.check.outputs.has-updates == 'true' && inputs.dry-run != true
+        env:
+          SUMMARY: ${{ steps.check.outputs.summary }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add package.json pnpm-lock.yaml
+          git commit -m "chore(sdk): bump $SUMMARY"
+          git push origin main || { git pull --rebase origin main && git push origin main; }
+
+      - name: Email on failure
+        if: failure() && steps.check.outputs.has-updates == 'true' && inputs.dry-run != true
+        uses: dawidd6/action-send-mail@94de994a9f6fffee200243214e17002e2920bb59 # v18
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          secure: true
+          username: ${{ secrets.MAIL_USERNAME }}
+          password: ${{ secrets.MAIL_PASSWORD }}
+          from: vibe-starter CI <${{ secrets.MAIL_USERNAME }}>
+          to: rajeevpalliyil@gmail.com
+          subject: '[vibe-starter] SDK bump failed: ${{ steps.check.outputs.summary }}'
+          body: |
+            The daily SDK auto-update failed and was NOT applied.
+
+            Attempted: ${{ steps.check.outputs.summary }}
+
+            Step results:
+              install (pnpm add): ${{ steps.bump.outcome }}
+              typecheck:          ${{ steps.typecheck.outcome }}
+              lint:               ${{ steps.lint.outcome }}
+              build:              ${{ steps.build.outcome }}
+              unit tests:         ${{ steps.unit.outcome }}
+
+            Logs: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
+            Fix vibe-starter, then either bump manually or let tomorrow's run retry.
