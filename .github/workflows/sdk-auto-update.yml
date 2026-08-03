@@ -107,13 +107,14 @@ jobs:
         if: failure() && steps.check.outputs.has-updates == 'true' && inputs.dry-run != true && env.MAIL_USERNAME != ''
         uses: dawidd6/action-send-mail@94de994a9f6fffee200243214e17002e2920bb59 # v18
         with:
-          server_address: smtp.gmail.com
-          server_port: 465
-          secure: true
+          # AWS SES (IBL_SMTP_SYSTEM_* values); 587 + STARTTLS, so secure=false
+          server_address: email-smtp.us-east-1.amazonaws.com
+          server_port: 587
+          secure: false
           username: ${{ secrets.MAIL_USERNAME }}
           password: ${{ secrets.MAIL_PASSWORD }}
-          from: vibe-starter CI <${{ secrets.MAIL_USERNAME }}>
-          to: rajeevpalliyil@gmail.com
+          from: vibe-starter CI <noreply@iblai.dev>
+          to: devops@ibleducation.com
           subject: '[vibe-starter] SDK bump failed: ${{ steps.check.outputs.summary }}'
           body: |
             The daily SDK auto-update failed and was NOT applied.
