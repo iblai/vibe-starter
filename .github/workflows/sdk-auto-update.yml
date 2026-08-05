@@ -77,9 +77,14 @@ jobs:
         id: typecheck
         run: pnpm typecheck
 
-      # NOTE: pnpm lint is deliberately NOT in the gate — it is red on baseline
-      # main today (19 pre-existing no-explicit-any errors) and lint results
-      # don't vary with dependency versions anyway.
+      # oxlint, exit-code check only — output is discarded so the bump log stays
+      # readable. oxlint exits 0 on warnings, so this fails only on a genuine
+      # lint error introduced by the bump. Reproduce locally with `pnpm lint`.
+      - name: Lint
+        if: steps.check.outputs.has-updates == 'true'
+        id: lint
+        run: pnpm lint >/dev/null 2>&1
+
       - name: Build
         if: steps.check.outputs.has-updates == 'true'
         id: build
@@ -124,6 +129,7 @@ jobs:
             Step results:
               install (pnpm add): ${{ steps.bump.outcome }}
               typecheck:          ${{ steps.typecheck.outcome }}
+              lint:               ${{ steps.lint.outcome }}
               build:              ${{ steps.build.outcome }}
               unit tests:         ${{ steps.unit.outcome }}
 
