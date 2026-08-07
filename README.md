@@ -23,6 +23,7 @@ The starting point for any ibl.ai single-page app.
 
 Clone the starter into a temp directory and copy it into your project root before installing (running `pnpm install --ignore-scripts` inside the cloned subdirectory causes hardlink issues):
 **Note that you should use `pnpm install` with the `--ignore-scripts` option.
+**Note that you need to copy the `.env.example` into `.env.local` before running the dev server.**
 ```bash
 git clone -b spa https://github.com/iblai/vibe-starter.git vibe-starter-init
 cp -a vibe-starter-init/. . && rm -rf vibe-starter-init
