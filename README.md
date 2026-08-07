@@ -22,8 +22,8 @@ The starting point for any ibl.ai single-page app.
 ## Quick Start
 
 Clone the starter into a temp directory and copy it into your project root before installing (running `pnpm install --ignore-scripts` inside the cloned subdirectory causes hardlink issues):
-**Note that you should use `pnpm install` with the `--ignore-scripts` option.
-**Note that you need to copy the `.env.example` into `.env.local` before running the dev server.**
+**Note that you should use `pnpm install` with the `--ignore-scripts` option.**
+
 ```bash
 git clone -b spa https://github.com/iblai/vibe-starter.git vibe-starter-init
 cp -a vibe-starter-init/. . && rm -rf vibe-starter-init
@@ -31,18 +31,11 @@ cp .env.example .env.local
 pnpm install --ignore-scripts
 ```
 
-
-Fill in `iblai.env` with your platform credentials (optional):
-
-```
-PLATFORM=<your-tenant-key>
-TOKEN=<your-platform-api-key>
-```
-
-Re-run the auth generator if you filled in `iblai.env` so the tenant key is written into `.env.local`:
+**Note that you need to copy the `.env.example` into `.env.local` before running the dev server.**
 ```bash
-iblai add auth
+cp .env.example .env.local
 ```
+
 Then start the dev server:
 
 ```bash
