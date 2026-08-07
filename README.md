@@ -26,21 +26,25 @@ Clone the starter into a temp directory and copy it into your project root befor
 ```bash
 git clone -b spa https://github.com/iblai/vibe-starter.git vibe-starter-init
 cp -a vibe-starter-init/. . && rm -rf vibe-starter-init
+cp .env.example .env.local
 pnpm install --ignore-scripts
 ```
 
 
-Fill in `iblai.env` with your platform credentials:
+Fill in `iblai.env` with your platform credentials (optional):
 
 ```
 PLATFORM=<your-tenant-key>
 TOKEN=<your-platform-api-key>
 ```
 
-Re-run the auth generator so the tenant key is written into `.env.local`, then start the dev server:
-
+Re-run the auth generator if you filled in `iblai.env` so the tenant key is written into `.env.local`:
 ```bash
 iblai add auth
+```
+Then start the dev server:
+
+```bash
 pnpm dev
 ```
 
