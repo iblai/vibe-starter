@@ -18,8 +18,8 @@ importers:
         specifier: ^2.13.5
         version: 2.13.5(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       '@iblai/iblai-js':
-        specifier: ^2.67.1
-        version: 2.67.1(d7a9cc4d7d68d2893863aaa1da986141)
+        specifier: ^2.67.3
+        version: 2.67.3(d7a9cc4d7d68d2893863aaa1da986141)
       '@iblai/iblai-web-mentor':
         specifier: ^2.0.1
         version: 2.0.1(@babel/core@7.29.0)(@typescript/typescript6@6.0.2)(rollup@4.59.0)
@@ -381,8 +381,8 @@ packages:
   '@iblai/iblai-api@4.166.0-ai':
     resolution: {integrity: sha512-dY9Jv+CkXEyTxRsOQFay5YvYe8K2LSQluJJvtssGQV2RbrxPPzONaKfnhcyarDs7Ft35Xqk1fuErjhUwNG3OIg==}
 
-  '@iblai/iblai-js@2.67.1':
-    resolution: {integrity: sha512-ZuuR6M3AyBj5c4cimbpli3VNKFk8w+Vwc/RN1Sn/w84SiCdLGQj9eF/076lcmtCb14H1uR/p7nQqZyVgkxNkrA==}
+  '@iblai/iblai-js@2.67.3':
+    resolution: {integrity: sha512-PYU9Mc8xVJNOw3GhQaBp6V0LQbHHyrBuV1wqLzGkobizwWTfwJRgc1pvlk0JXs9KNSioDUVnjE0qMIDKyIx1/A==}
     engines: {node: '>=20.0.0'}
     hasBin: true
     peerDependencies:
@@ -5845,7 +5845,7 @@ snapshots:
     dependencies:
       tslib: 2.8.1
 
-  '@iblai/iblai-js@2.67.1(d7a9cc4d7d68d2893863aaa1da986141)':
+  '@iblai/iblai-js@2.67.3(d7a9cc4d7d68d2893863aaa1da986141)':
     dependencies:
       '@iblai/data-layer': 1.39.0(@reduxjs/toolkit@2.11.2(react-redux@9.2.0(@types/react@19.2.14)(react@19.2.4)(redux@5.0.1))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react-redux@9.2.0(@types/react@19.2.14)(react@19.2.4)(redux@5.0.1))(react@19.2.4)
       '@iblai/iblai-api': 4.166.0-ai
